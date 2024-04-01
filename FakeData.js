@@ -1,40 +1,92 @@
 const UserList = [
     {
         id: 1,
-        name: "John Doe",
-        username: "johndoe123",
-        age: 28,
-        nationality: "American"
+        name: "John",
+        username: "john",
+        age: 20,
+        nationality: "CANADA",
+        friends: [
+          {
+            id: 2,
+            name: "Pedro",
+            username: "PedroTech",
+            age: 20,
+            nationality: "BRAZIL",
+          },
+          {
+            id: 5,
+            name: "Kelly",
+            username: "kelly2019",
+            age: 5,
+            nationality: "CHILE",
+          },
+        ],
       },
       {
         id: 2,
-        name: "Alice Smith",
-        username: "alicesmith456",
-        age: 35,
-        nationality: "British"
+        name: "Pedro",
+        username: "PedroTech",
+        age: 20,
+        nationality: "BRAZIL",
       },
       {
         id: 3,
-        name: "Ahmed Khan",
-        username: "ahmedkhan789",
-        age: 42,
-        nationality: "Pakistani"
+        name: "Sarah",
+        username: "cameron",
+        age: 25,
+        nationality: "INDIA",
+        friends: [
+          {
+            id: 2,
+            name: "Pedro",
+            username: "PedroTech",
+            age: 20,
+            nationality: "BRAZIL",
+          },
+        ],
       },
       {
         id: 4,
-        name: "Sophie Dubois",
-        username: "sophiedubois321",
-        age: 30,
-        nationality: "French"
+        name: "Rafe",
+        username: "rafe123",
+        age: 60,
+        nationality: "GERMANY",
       },
       {
         id: 5,
-        name: "Chen Wei",
-        username: "chenwei567",
-        age: 25,
-        nationality: "Chinese"
+        name: "Kelly",
+        username: "kelly2019",
+        age: 5,
+        nationality: "CHILE",
       },
        
 ];
 
-module.exports= {UserList}
+const MovieList = [
+    {
+      id: 1,
+      name: "Avengers Endgame",
+      yearOfPublication: 2019,
+      isInTheaters: true,
+    },
+    {
+      id: 2,
+      name: "Interstellar",
+      yearOfPublication: 2007,
+      isInTheaters: true,
+    },
+    {
+      id: 3,
+      name: "Superbad",
+      yearOfPublication: 2009,
+      isInTheaters: true,
+    },
+    {
+      id: 4,
+      name: "PedroTech The Movie",
+      yearOfPublication: 2035,
+      isInTheaters: false,
+    },
+  ];
+  
+  module.exports = { UserList, MovieList };
