@@ -1,0 +1,296 @@
+1- unlike rest which has multiple end points like /user /fllowers /posts ... single end point known as /graphql
+
+2- overfetching : fetching everything even if we need a part of the data, it returns everything
+
+3- underfetching :  not getting enough data that is required for our application.
+
+4- In GraphQL, the root query type is the entry point for all GraphQL queries. It defines the structure of queries that clients can execute against the GraphQL API. In most GraphQL schemas, there is typically only one root query type, named Query by convention, although it can be named differently depending on the schema design.
+
+The root query type consists of fields, and each field represents a possible data-fetching operation that clients can perform. These fields can return scalar values like strings or integers, or they can return object types, allowing clients to traverse the graph to access related data.
+
+Here's an example of a simple GraphQL schema with a root query type:
+
+
+type Query {
+  hello: String
+  user(id: ID!): User
+}
+
+type User {
+  id: ID!
+  name: String
+  email: String
+}
+In this schema, the Query type is the root query type, and it has two fields: hello and user. The hello field returns a string, while the user field takes an id argument and returns a User object.
+
+When a client sends a GraphQL query, it must start by specifying a field from the root query type. For example:
+
+query {
+  hello
+  user(id: "123") {
+    id
+    name
+  }
+}
+In this query, hello and user are fields of the root query type Query, and the client is requesting the hello field and the id and name fields of the User object returned by the user field.
+
+5-In GraphQL, while it's conventional to start a query with the keyword "query", it's not strictly necessary. GraphQL parsers typically assume that any block of fields without a preceding keyword is a query. So, you can omit the "query" keyword and directly list the fields you want to query.
+
+6- is the feild is required we put !
+
+type user{
+  id: ID!
+  name: String!
+  age: Int!
+  height: Float!
+  isMarried: Boolean!
+  friends: [user!]
+  videosPosted: [Video!]
+}
+
+type Video{
+  id: ID!
+  title: String!
+  description: String!
+}
+
+6- every graph ql has a type query which consists of fetching  data from server and returning to client side.
+type Query{
+    user(id:ID, name: String): User // user(input: UserInput): User
+}
+or we can saperately define Input as a type and use it
+input UserInput{
+    id: ID
+    name: String
+}
+
+
+Example playground:
+
+request-- 
+{
+  country(code: "US"){
+    code
+    name
+    phone 
+    capital
+    currency
+  } 
+}
+
+response--
+{
+  "data": {
+    "country": {
+      "code": "US",
+      "name": "United States",
+      "phone": "1",
+      "capital": "Washington D.C.",
+      "currency": "USD,USN,USS"
+    }
+  }
+}
+
+request--
+{
+  country(code: "US"){
+    code
+    name
+    phone 
+    capital
+    currency
+    continent{
+      code
+      name
+      countries{ 
+        name
+        capital
+      }
+    }
+  } 
+}
+
+response--
+
+{
+  "data": {
+    "country": {
+      "code": "US",
+      "name": "United States",
+      "phone": "1",
+      "capital": "Washington D.C.",
+      "currency": "USD,USN,USS",
+      "continent": {
+        "code": "NA",
+        "name": "North America",
+        "countries": [
+          {
+            "name": "Antigua and Barbuda",
+            "capital": "Saint John's"
+          },
+          {
+            "name": "Anguilla",
+            "capital": "The Valley"
+          },
+          {
+            "name": "Aruba",
+            "capital": "Oranjestad"
+          },
+          {
+            "name": "Barbados",
+            "capital": "Bridgetown"
+          },
+          {
+            "name": "Saint Barthélemy",
+            "capital": "Gustavia"
+          },
+          {
+            "name": "Bermuda",
+            "capital": "Hamilton"
+          },
+          {
+            "name": "Bonaire",
+            "capital": "Kralendijk"
+          },
+          {
+            "name": "Bahamas",
+            "capital": "Nassau"
+          },
+          {
+            "name": "Belize",
+            "capital": "Belmopan"
+          },
+          {
+            "name": "Canada",
+            "capital": "Ottawa"
+          },
+          {
+            "name": "Costa Rica",
+            "capital": "San José"
+          },
+          {
+            "name": "Cuba",
+            "capital": "Havana"
+          },
+          {
+            "name": "Curacao",
+            "capital": "Willemstad"
+          },
+          {
+            "name": "Dominica",
+            "capital": "Roseau"
+          },
+          {
+            "name": "Dominican Republic",
+            "capital": "Santo Domingo"
+          },
+          {
+            "name": "Grenada",
+            "capital": "St. George's"
+          },
+          {
+            "name": "Greenland",
+            "capital": "Nuuk"
+          },
+          {
+            "name": "Guadeloupe",
+            "capital": "Basse-Terre"
+          },
+          {
+            "name": "Guatemala",
+            "capital": "Guatemala City"
+          },
+          {
+            "name": "Honduras",
+            "capital": "Tegucigalpa"
+          },
+          {
+            "name": "Haiti",
+            "capital": "Port-au-Prince"
+          },
+          {
+            "name": "Jamaica",
+            "capital": "Kingston"
+          },
+          {
+            "name": "Saint Kitts and Nevis",
+            "capital": "Basseterre"
+          },
+          {
+            "name": "Cayman Islands",
+            "capital": "George Town"
+          },
+          {
+            "name": "Saint Lucia",
+            "capital": "Castries"
+          },
+          {
+            "name": "Saint Martin",
+            "capital": "Marigot"
+          },
+          {
+            "name": "Martinique",
+            "capital": "Fort-de-France"
+          },
+          {
+            "name": "Montserrat",
+            "capital": "Plymouth"
+          },
+          {
+            "name": "Mexico",
+            "capital": "Mexico City"
+          },
+          {
+            "name": "Nicaragua",
+            "capital": "Managua"
+          },
+          {
+            "name": "Panama",
+            "capital": "Panama City"
+          },
+          {
+            "name": "Saint Pierre and Miquelon",
+            "capital": "Saint-Pierre"
+          },
+          {
+            "name": "Puerto Rico",
+            "capital": "San Juan"
+          },
+          {
+            "name": "El Salvador",
+            "capital": "San Salvador"
+          },
+          {
+            "name": "Sint Maarten",
+            "capital": "Philipsburg"
+          },
+          {
+            "name": "Turks and Caicos Islands",
+            "capital": "Cockburn Town"
+          },
+          {
+            "name": "Trinidad and Tobago",
+            "capital": "Port of Spain"
+          },
+          {
+            "name": "United States",
+            "capital": "Washington D.C."
+          },
+          {
+            "name": "Saint Vincent and the Grenadines",
+            "capital": "Kingstown"
+          },
+          {
+            "name": "British Virgin Islands",
+            "capital": "Road Town"
+          },
+          {
+            "name": "U.S. Virgin Islands",
+            "capital": "Charlotte Amalie"
+          }
+        ]
+      }
+    }
+  }
+}
+
