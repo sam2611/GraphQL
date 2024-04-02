@@ -294,3 +294,11 @@ response--
   }
 }
 
+Mutation- used for post, delete, update 
+
+React @apollo/client - useQuery and useMutation
+
+Context
+Fragment
+Unions
+
