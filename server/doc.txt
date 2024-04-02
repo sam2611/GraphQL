@@ -297,8 +297,81 @@ response--
 Mutation- used for post, delete, update 
 
 React @apollo/client - useQuery and useMutation
+Parent- when we access a parent input in a resolver function it will basically return what was return from the previous level from the graphql graph 
+ query --> users --> favoritemovies
+ like if we access parent from the favoritemovies it will return the users i.e the previous level. also it is to be noted that it will return the evry feild of it not just the ones that are asked.
 
-Context
-Fragment
-Unions
+Context - helps us to pass values to every resolver. In GraphQL, a context is an object shared by all the resolvers of a specific execution. It’s useful for keeping data such as authentication info, the current user, database connection, data sources and other things you need for running your business logic.
+
+The context is available as the 3rd argument to each resolver:
+
+const resolvers = {
+  Query: {
+    myQuery(root, args, context, info) {
+      // ...
+    }
+  }
+}
+
+info - nfo is an object that basically encapsulates every piece of info about the requested query/mutation. Its not easy to parse and in my entire time using graphql I've only used it once to set up some custom logging.
+
+Fragment- used for organization purposes. A fragment is a reusable unit in GraphQL that allows developers to construct sets of fields that you can include in multiple operations. Fragments are helpful when constructing queries that require repetitive fields or complex data structures that need to be broken down into smaller chunks.
+fragment Name on TypeName {
+  field1
+  field2
+  field3
+}
+So why are fragments cool within a GrapQL query?
+
+Reusability – With fragments, you can organize your queries into reusable units
+Caching – GraphQL clients make use of fragments, to provide caching options
+
+Error handling by using unions in graphQL and best practices
+
+Unions-  unions are a way to represent multiple types in a single field. They are useful when a field can return different types of objects, but you want to specify in advance which types those could be.
+
+Imagine you have a field called search in your GraphQL API that can return either a list of books or a list of authors. Instead of creating separate queries for books and authors, you can use a union to represent both possibilities in a single query.
+
+Here's a simple example:
+
+Let's say you have two types: Book and Author.
+
+graphql
+Copy code
+type Book {
+  title: String
+  author: String
+}
+
+type Author {
+  name: String
+  books: [String]
+}
+Now, you can define a union type called SearchResult:
+
+graphql
+Copy code
+union SearchResult = Book | Author
+With this union type, you can create a query like this:
+
+graphql
+Copy code
+query {
+  search(query: "GraphQL") {
+    __typename
+    ... on Book {
+      title
+      author
+    }
+    ... on Author {
+      name
+      books
+    }
+  }
+}
+In this query, __typename is a special field that tells you which type each result belongs to. Then, using the ... on syntax, you can specify different fields based on the type of result.
+
+When the server responds to this query, it will return either a Book object or an Author object, depending on what matches the search query.
+
+Unions are powerful because they allow you to handle different types of data in a single query, making your API more flexible and easier to work with.
 
